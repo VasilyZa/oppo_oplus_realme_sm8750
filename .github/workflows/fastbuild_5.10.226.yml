@@ -132,6 +132,9 @@ jobs:
           echo "所有源码及llvm-Clang18工具链初始化完成！"
           echo "正在去除 ABI 保护 & 去除 dirty 后缀..."
           rm common/android/abi_gki_protected_exports_* || true
+          # 5.10 源码未开源部分 OPlus Kconfig，需要占位文件防止 Kconfig include 失败
+          mkdir -p common/kernel/oplus_cpu/sched
+          : > common/kernel/oplus_cpu/sched/Kconfig
           for f in common/scripts/setlocalversion; do
             sed -i 's/ -dirty//g' "$f"
             sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' "$f"
